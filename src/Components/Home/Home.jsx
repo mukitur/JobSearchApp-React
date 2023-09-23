@@ -1,16 +1,12 @@
-import { useLoaderData } from 'react-router-dom';
 import Banner from '../Banner/Banner';
-import JobCategories from '../JobCategories/JobCategories';
 import FeaturedJobs from '../FeaturedJobs/FeaturedJobs';
+import JobCategories from '../JobCategories/JobCategories';
 
 const Home = () => {
-  const catLists = useLoaderData();
-  const fJobs = useLoaderData();
   return (
     <div>
       <Banner />
-      <JobCategories catLists={catLists} />
-      <FeaturedJobs fJobs={fJobs} />
+      <JobCategories />
     </div>
   );
 };
