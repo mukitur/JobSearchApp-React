@@ -16,9 +16,37 @@ const JobDEtails = () => {
     contact_information,
   } = job;
 
-  const handleSweetAlert = () => {
-    swal('Great!', 'Jobs added successfully!', 'success');
+  //   const handleSweetAlert = () => {
+  //     swal('Great!', 'Jobs added successfully!', 'success');
+  //   };
+
+  //   LocalStorage
+  const handleApplyJob = () => {
+    // console.log({ job });
+    // localStorage.setItem('test', 'Uday');
+    const addedApplyJobArray = [];
+    const jobItems = JSON.parse(localStorage.getItem('jobs'));
+
+    // First time check local storage is empty or not
+    if (!jobItems) {
+      addedApplyJobArray.push(job);
+      localStorage.setItem('jobs', JSON.stringify(addedApplyJobArray));
+      swal('Great!', 'Jobs added successfully!', 'success');
+    } else {
+      // check duplicate : 1st time added then 2nd tine will not add
+      const isExists = jobItems.find((job) => job.id === parseInt(id));
+      //   console.log(isExists);
+      if (!isExists) {
+        // ekhane 1 item ache
+        addedApplyJobArray.push(...jobItems, job);
+        localStorage.setItem('jobs', JSON.stringify(addedApplyJobArray));
+        swal('Great!', 'Jobs added successfully!', 'success');
+      } else {
+        swal('Sorry!', 'You already applied the job!', 'error');
+      }
+    }
   };
+
   return (
     <div>
       <div className="grid gap-4 md:grid-cols-4">
@@ -40,7 +68,7 @@ const JobDEtails = () => {
           <p>Address: {contact_information.address}</p>
           <div className="flex justify-between">
             <button
-              onClick={handleSweetAlert}
+              onClick={handleApplyJob}
               className=" bg-gradient-to-r from-[#7E90FE] to-[#9873FF] px-4 py-2 rounded-md text-white my-5"
             >
               Apply Now
